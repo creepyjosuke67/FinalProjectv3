@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableHighlight, firebase, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet } from 'react-native';
+import {firebase} from 'firebase';
+import {app} from '../config';
 
 export default class Home extends Component {
     constructor(props) {
@@ -11,15 +13,15 @@ export default class Home extends Component {
         };
     }
     onPressRegister(test) {
-        firebase.auth()
+        app.auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        .then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
+        //.then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     onPressLogin(test) {
-        firebase.auth()
+        app.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => this.props.navigation.navigate('List',{email: this.state.email}))
+        //.then(() => this.props.navigation.navigate('List',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     render() {

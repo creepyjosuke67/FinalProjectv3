@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 import ItemComponent from '../components/ItemComponent';
 
-/**import {db} from '../config';
+import {db} from '../config';
 
 let itemsRef = db.ref('/items');
 
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#ebebeb'
     }
-});**/
+});

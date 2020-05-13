@@ -15,13 +15,13 @@ export default class Home extends Component {
     onPressRegister(test) {
         app.auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        //.then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
+        .then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     onPressLogin(test) {
         app.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        //.then(() => this.props.navigation.navigate('List',{email: this.state.email}))
+        .then(() => this.props.navigation.navigate('List',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     render() {

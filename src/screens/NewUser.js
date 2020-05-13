@@ -1,4 +1,4 @@
-/**import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, StyleSheet, TextInput, Alert } from 'react-native';
 import {db} from '../config';
 
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
       alignSelf: 'stretch',
       justifyContent: 'center'
     }
-  });**/
+  });

@@ -8,8 +8,8 @@ import List from './src/screens/List';
 const AppNavigator = createStackNavigator(
 {
   Home,
-  //NewUser,
-  //List
+  NewUser,
+  List
 },
 {
   initialRouteName:'Home'

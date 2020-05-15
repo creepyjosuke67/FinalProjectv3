@@ -8,7 +8,7 @@ export default class lfmAlbums extends Component {
         super(props);
     
         this.state = {
-          username:,
+          username:'cwater16',
           lfm_key: lfmKey,
           discogKey:discogKey,
           discogSecret:discogSecret,
@@ -28,13 +28,13 @@ export default class lfmAlbums extends Component {
         })
         .then((response) => response.json())
         .then((json) => {
-            this.setState({data: json.results});
+            this.setState({discogData: json.results});
         })
         .catch((error) => console.error(error))
         .finally(() => {
             this.setState({isLoading: false});
         })
-        this.setState({vibeCheck:this.state.data[0].master_id})
+        this.setState({vibeCheck:this.state.discogData[0].master_id})
         //this.props.navigation.navigate('FinalScreen',{masterID: discogData.master_id});
     }
 

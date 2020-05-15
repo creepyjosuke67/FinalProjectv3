@@ -35,7 +35,7 @@ export default class lfmAlbums extends Component {
             this.setState({isLoading: false});
         })
         this.setState({vibeCheck:this.state.data[0].master_id})
-        //this.props.navigation.navigate('DiscogPage',{masterID: discogData.master_id});
+        //this.props.navigation.navigate('FinalScreen',{masterID: discogData.master_id});
     };
 
     componentDidMount() {
@@ -70,6 +70,12 @@ export default class lfmAlbums extends Component {
                         <Text style={{color:'white', paddingBottom:5}}>{item.artist.name}</Text>
                     
                         <Text style={{color:'white'}}> {item.name}</Text>
+
+                        <Image source={{uri:item.image[2]['#text']}} style ={{height:300, width:300}}/>
+
+                        <Button title="find on discogs" 
+                            onPress={this.pullDiscogs(item.name)}
+                        />
                         
                   </View>
                   

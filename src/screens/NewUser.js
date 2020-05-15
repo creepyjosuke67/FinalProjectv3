@@ -42,10 +42,11 @@ export default class AddItem extends Component {
                 <TextInput style={styles.itemInput} placeholder='First Name' onChangeText={text => this.setState({fname:text})}/>
                 <TextInput style={styles.itemInput} placeholder='Last Name' onChangeText={text => this.setState({lname:text})}/>
                 <TextInput style={styles.itemInput} placeholder='Last FM Username' onChangeText={text => this.setState({lname:text})}/>
-                <TouchableHighlight>
+                <TouchableHighlight
                     style={styles.button}
                     underlayColor='white'
                     onPress={this.writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser)}
+                >   
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableHighlight>
             </View>

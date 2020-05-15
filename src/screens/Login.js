@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet } from 'react-native';
-import {firebase} from 'firebase';
+import * as firebase from 'firebase';
 import {app} from '../config';
 
 export default class Home extends Component {
@@ -13,13 +13,13 @@ export default class Home extends Component {
         };
     }
     onPressRegister(test) {
-        app.auth()
+        firebase.auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
         .then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     onPressLogin(test) {
-        app.auth()
+        firebase.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => this.props.navigation.navigate('List',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
@@ -41,15 +41,15 @@ export default class Home extends Component {
                     onChangeText={text => this.setState({password:text})}
                     value={this.state.password}
                 />
-                <TouchableHighlight
-                    title="Register New User"
+                <Button
+                    title="Register"
                     style={styles.Button}
-                    onPress={this.onPressRegister()}
+                    onPress={this.onPressRegister.bind(this)}
                 />
-                <TouchableHighlight
-                    title="Log In"
+                <Button
+                    title="Login"
                     style={styles.Button}
-                    onPress={this.onPressLogin()}
+                    onPress={this.onPressLogin.bind(this)}
                 />
             </View>
         );
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignContent:'center'
     },
     input:{
-        color: 'white',
+        color: 'black',
         borderColor: 'gray',
         borderWidth: 1,
         padding: 10,

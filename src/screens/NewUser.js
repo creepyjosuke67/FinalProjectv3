@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import {db} from '../config';
 
-let addItem = item => {
-    db.ref('/items').push({
-        name: item
-    });
-};
 export default class AddItem extends Component {
     
     state = {
@@ -17,7 +12,11 @@ export default class AddItem extends Component {
     };
 
 
-    writeUserData(email,fname,lname,lfmUser){
+    writeUserData(test){
+        const email = this.props.navigation.getParam('email','NO-ID');
+        const fname = this.state.fname;
+        const lname = this.state.lname;
+        const lfmUser = this.state.lfmUser;
         db.ref('UsersList').push({
             email,
             fname,
@@ -25,7 +24,9 @@ export default class AddItem extends Component {
             lfmUser
         }).then((data) =>{
             console.log('data', data)
-        }).catch((error =>{
+        })
+        .then(() => {this.props.navigation.navigate("List")})
+        .catch((error =>{
             console.log('error', error)
         }));
     }
@@ -39,7 +40,7 @@ export default class AddItem extends Component {
                 <Button
                     title="Add Details"
                     style={styles.button}
-                    onPress={this.writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser).bind(this)}
+                    onPress={this.writeUserData.bind(this)}
                 />
             </View>
         );

@@ -8,7 +8,7 @@ export default class lfmAlbums extends Component {
         super(props);
     
         this.state = {
-          username: 'cwater16',
+          username:,
           lfm_key: lfmKey,
           discogKey:discogKey,
           discogSecret:discogSecret,
@@ -39,6 +39,7 @@ export default class lfmAlbums extends Component {
     }
 
     componentDidMount() {
+        
         fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
             method:'GET',
           
@@ -74,7 +75,7 @@ export default class lfmAlbums extends Component {
                         <Image source={{uri:item.image[2]['#text']}} style ={{height:300, width:300}}/>
 
                         <Button title="find on discogs" 
-                            onPress={pullDiscogs(item.name).bind(this)}
+                            onPress={() => this.pullDiscogs(item.name)}
                         />
                         
                   </View>

@@ -9,7 +9,8 @@ export default class Home extends Component {
         this.state={
             email: '',
             password: '',
-            errorMessage: null
+            errorMessage: null,
+            lfmUsername: ''
         };
     }
     onPressRegister(test) {

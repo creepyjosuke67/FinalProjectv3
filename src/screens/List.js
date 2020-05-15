@@ -20,7 +20,7 @@ export default class lfmAlbums extends Component {
         };
     }
 
-    pullDiscogs = (item) => {
+    pullDiscogs(item) {
         this.setState({discogSearch: this.item});
         this.setState({isLoading: true});
         fetch('https://api.discogs.com/database/search?q='+this.state.discogSearch+'&key='+this.state.discogKey+'&secret='+this.state.discogSecret,{
@@ -36,7 +36,7 @@ export default class lfmAlbums extends Component {
         })
         this.setState({vibeCheck:this.state.data[0].master_id})
         //this.props.navigation.navigate('FinalScreen',{masterID: discogData.master_id});
-    };
+    }
 
     componentDidMount() {
         fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
@@ -74,7 +74,7 @@ export default class lfmAlbums extends Component {
                         <Image source={{uri:item.image[2]['#text']}} style ={{height:300, width:300}}/>
 
                         <Button title="find on discogs" 
-                            onPress={this.pullDiscogs(item.name)}
+                            onPress={pullDiscogs(item.name).bind(this)}
                         />
                         
                   </View>

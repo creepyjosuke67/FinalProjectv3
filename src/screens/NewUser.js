@@ -27,8 +27,8 @@ export default class AddItem extends Component {
             console.log('data', data)
         }).catch((error =>{
             console.log('error', error)
-        }))
-    };
+        }));
+    }
     render() {
         return (
             <View style={styles.main}>
@@ -39,7 +39,7 @@ export default class AddItem extends Component {
                 <Button
                     title="Add Details"
                     style={styles.button}
-                    onPress={writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser).bind(this)}
+                    onPress={this.writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser).bind(this)}
                 />
             </View>
         );

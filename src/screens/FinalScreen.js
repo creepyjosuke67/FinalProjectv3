@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, TextInput, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {lfmKey, discogKey, discogSecret} from '../components/Constants.js';
+
 export default class lfmAlbums extends Component {
 
     constructor(props) {
@@ -9,43 +9,20 @@ export default class lfmAlbums extends Component {
     
         this.state = {
           username: 'cwater16',
-          lfm_key: lfmKey,
-          discogKey:discogKey,
-          discogSecret:discogSecret,
           data: [],
-          discogSearch:'mask',
-          discogData:[],
+          discogMaster:'2463',
           vibeCheck: '',
           isLoading: true
         };
     }
-
-    pullDiscogs = (item) => {
-        this.setState({discogSearch: this.item});
-        this.setState({isLoading: true});
-        fetch('https://api.discogs.com/database/search?q='+this.state.discogSearch+'&key='+this.state.discogKey+'&secret='+this.state.discogSecret,{
-            method:'GET',
-        })
-        .then((response) => response.json())
-        .then((json) => {
-            this.setState({data: json.results});
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-            this.setState({isLoading: false});
-        })
-        this.setState({vibeCheck:this.state.data[0].master_id})
-        //this.props.navigation.navigate('DiscogPage',{masterID: discogData.master_id});
-    };
-
     componentDidMount() {
-        fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
+        fetch('https://api.discogs.com/masters/'+this.state.discogMaster+'/versions',{
             method:'GET',
           
         })
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json.topalbums.album });
+            this.setState({ data: json.versions });
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -67,10 +44,12 @@ export default class lfmAlbums extends Component {
                 renderItem={({ item }) => (
                   <View style={{flex:1,justifyContent:'center',backgroundColor:'black', borderColor:'gray', borderWidth:1, paddingBottom:10, textAlign:'center', margin:10}}>
                         
-                        <Text style={{color:'white', paddingBottom:5}}>{item.artist.name}</Text>
+                        <Text style={{color:'white', paddingBottom:5}}>{item.stats.label}</Text>
                     
-                        <Text style={{color:'white'}}> {item.name}</Text>
-                        
+                        <Text style={{color:'white'}}>{item.stats.format}</Text>
+
+                        <Text style={{color:'white'}}>{item.stats.released}</Text>
+      
                   </View>
                   
                 )}

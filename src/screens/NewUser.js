@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import {db} from '../config';
 
 let addItem = item => {
@@ -28,13 +28,7 @@ export default class AddItem extends Component {
         }).catch((error =>{
             console.log('error', error)
         }))
-    }
-
-    handleSubmit = () => {
-        addItem(this.state.name);
-        Alert.alert('Item saved successfully');
     };
-
     render() {
         return (
             <View style={styles.main}>
@@ -42,13 +36,11 @@ export default class AddItem extends Component {
                 <TextInput style={styles.itemInput} placeholder='First Name' onChangeText={text => this.setState({fname:text})}/>
                 <TextInput style={styles.itemInput} placeholder='Last Name' onChangeText={text => this.setState({lname:text})}/>
                 <TextInput style={styles.itemInput} placeholder='Last FM Username' onChangeText={text => this.setState({lname:text})}/>
-                <TouchableHighlight
+                <Button
+                    title="Add Details"
                     style={styles.button}
-                    underlayColor='white'
-                    onPress={this.writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser)}
-                >   
-                    <Text style={styles.buttonText}>Add</Text>
-                </TouchableHighlight>
+                    onPress={writeUserData(this.state.email,this.state.fname,this.state.lname,this.state.lfmUser).bind(this)}
+                />
             </View>
         );
     }

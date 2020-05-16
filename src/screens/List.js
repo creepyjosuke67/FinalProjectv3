@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, TextInput, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {lfmKey, discogKey, discogSecret} from '../components/Constants.js';
-import {db} from '../config'
+import {db} from '../config';
+import * as firebase from 'firebase';
 import { isConfigurationAvailable } from 'expo/build/AR';
 export default class lfmAlbums extends Component {
 
@@ -10,8 +11,9 @@ export default class lfmAlbums extends Component {
         super(props);
     
         this.state = {
-          username:'cwater16',
+          username:'',
           lfm_key: lfmKey,
+          userID: '',
           data: [],
           discogSearch:'',
           isLoading: true
@@ -19,18 +21,25 @@ export default class lfmAlbums extends Component {
     }
 
     masterSearch(item) {
-        this.setState({discogSearch:item});
-        this.setState({discogSearch:discogSearch.replace(" ","%20")});
-        this.props.navigation.navigate('FinalScreen.js',{
+        var searchTerm = ({discogSearch:item});
+        this.setState({discogSearch:this.state.discogSearch.replace(" ","%20")});
+        this.props.navigation.navigate('FinalScreen',{
           newSearch: this.state.discogSearch
         });
     }
 
     componentDidMount() {
         //Trying to figure out how to pull the lfmusername from the database for the email of the user that is logged in
-        //db.ref('UsersList')
-        
-        fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
+        const userID = (firebase.auth().currentUser.uid);
+        var username = '';
+        let userRef = db.ref('users/'+ userID).child('lfmUser');
+        userRef.on('value',(snap) =>{
+          console.log(snap.val());
+          username=snap.val();
+          
+        });
+
+        fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+username+'&api_key='+this.state.lfm_key+'&format=json',{
             method:'GET',
           
         })

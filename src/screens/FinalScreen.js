@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, TextInput, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import {lfmKey, discogKey, discogSecret} from '../components/Constants.js';
 export default class lfmAlbums extends Component {
 
     constructor(props) {
         super(props);
     
         this.state = {
+          discogKey: discogKey,
+          discogSecret: discogSecret,
           username: 'cwater16',
           data: [],
           discogMaster:'2463',
@@ -16,18 +18,19 @@ export default class lfmAlbums extends Component {
         };
     }
     componentDidMount() {
-        this.newSearch = this.props.navigation.getParam('newSearch','NO-ID');
+        const newSearch = this.props.navigation.getParam('newSearch','NO-ID');
+        //fetch('https://api.discogs.com/database')
         fetch('https://api.discogs.com/masters/'+this.state.discogMaster+'/versions',{
             method:'GET',
           
         })
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json.versions });
+            this.setState({ data: json.versions })
         })
         .catch((error) => console.error(error))
         .finally(() => {
-            this.setState({ isLoading: false });
+            this.setState({ isLoading: false })
         });
     }
     

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import {db} from '../config';
+import * as firebase from 'firebase';
 
 export default class AddItem extends Component {
     
@@ -17,7 +18,8 @@ export default class AddItem extends Component {
         const fname = this.state.fname;
         const lname = this.state.lname;
         const lfmUser = this.state.lfmUser;
-        db.ref('UsersList').push({
+        
+        db.ref('users/' + firebase.auth().currentUser.uid).set({
             email,
             fname,
             lname,

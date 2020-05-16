@@ -36,7 +36,7 @@ export default class AddItem extends Component {
                 <Text style={styles.title}>Add User Data</Text>
                 <TextInput style={styles.itemInput} placeholder='First Name' onChangeText={text => this.setState({fname:text})}/>
                 <TextInput style={styles.itemInput} placeholder='Last Name' onChangeText={text => this.setState({lname:text})}/>
-                <TextInput style={styles.itemInput} placeholder='Last FM Username' onChangeText={text => this.setState({lname:text})}/>
+                <TextInput style={styles.itemInput} placeholder='Last FM Username' onChangeText={text => this.setState({lfmUser:text})}/>
                 <Button
                     title="Add Details"
                     style={styles.button}

@@ -16,6 +16,7 @@ export default class lfmAlbums extends Component {
         };
     }
     componentDidMount() {
+        this.newSearch = this.props.navigation.getParam('newSearch','NO-ID');
         fetch('https://api.discogs.com/masters/'+this.state.discogMaster+'/versions',{
             method:'GET',
           

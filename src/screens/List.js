@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, TextInput, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {lfmKey, discogKey, discogSecret} from '../components/Constants.js';
+import {db} from '../config'
+import { isConfigurationAvailable } from 'expo/build/AR';
 export default class lfmAlbums extends Component {
 
     constructor(props) {
@@ -10,35 +12,23 @@ export default class lfmAlbums extends Component {
         this.state = {
           username:'cwater16',
           lfm_key: lfmKey,
-          discogKey:discogKey,
-          discogSecret:discogSecret,
           data: [],
-          discogSearch:'mask',
-          discogData:[],
-          vibeCheck: '',
+          discogSearch:'',
           isLoading: true
         };
     }
 
-    pullDiscogs(item) {
-        this.setState({discogSearch: this.item});
-        this.setState({isLoading: true});
-        fetch('https://api.discogs.com/database/search?q='+this.state.discogSearch+'&key='+this.state.discogKey+'&secret='+this.state.discogSecret,{
-            method:'GET',
-        })
-        .then((response) => response.json())
-        .then((json) => {
-            this.setState({discogData: json.results});
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-            this.setState({isLoading: false});
-        })
-        this.setState({vibeCheck:this.state.discogData[0].master_id})
-        //this.props.navigation.navigate('FinalScreen',{masterID: discogData.master_id});
+    masterSearch(item) {
+        this.setState({discogSearch:item});
+        this.setState({discogSearch:discogSearch.replace(" ","%20")});
+        this.props.navigation.navigate('FinalScreen.js',{
+          newSearch: this.state.discogSearch
+        });
     }
 
     componentDidMount() {
+
+        db.ref('UsersList')
         
         fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
             method:'GET',
@@ -75,7 +65,7 @@ export default class lfmAlbums extends Component {
                         <Image source={{uri:item.image[2]['#text']}} style ={{height:300, width:300}}/>
 
                         <Button title="find on discogs" 
-                            onPress={() => this.pullDiscogs(item.name)}
+                            onPress={() => this.masterSearch(item.name)}
                         />
                         
                   </View>

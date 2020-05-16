@@ -25,7 +25,8 @@ export default class AddItem extends Component {
         }).then((data) =>{
             console.log('data', data)
         })
-        .then(() => {this.props.navigation.navigate("List")})
+        //exporting email address to list so it can be searched in the database
+        .then(() => {this.props.navigation.navigate("List",{email:this.email})})
         .catch((error =>{
             console.log('error', error)
         }));

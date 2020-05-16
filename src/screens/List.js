@@ -27,8 +27,8 @@ export default class lfmAlbums extends Component {
     }
 
     componentDidMount() {
-
-        db.ref('UsersList')
+        //Trying to figure out how to pull the lfmusername from the database for the email of the user that is logged in
+        //db.ref('UsersList')
         
         fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+this.state.username+'&api_key='+this.state.lfm_key+'&format=json',{
             method:'GET',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView,View, Text, TextInput, TouchableHighlight, Button, StyleSheet } from 'react-native';
 import * as firebase from 'firebase';
 import {app} from '../config';
 
@@ -16,27 +16,31 @@ export default class Home extends Component {
     onPressRegister(test) {
         firebase.auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        .then(() => this.props.navigation.navigate('NewUser',{email: this.state.email}))
+        .then(() => this.props.navigation.navigate('Registration',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     onPressLogin(test) {
         firebase.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => this.props.navigation.navigate('List',{email: this.state.email}))
+        .then(() => this.props.navigation.navigate('TopAlbums',{email: this.state.email}))
         .catch((error)=>{console.log('error',error)})
     }
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Home Screen</Text>
+            
+            
+            
+            <KeyboardAvoidingView style={styles.main}>
+                <Text style={styles.title}>Album Saver</Text>
+                
                 <TextInput
-                    style={styles.input}
+                    style={styles.itemInput}
                     placeholder='Email Address'
                     onChangeText={text => this.setState({email:text})}
                     value={this.state.email}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={styles.itemInput}
                     placeholder='Password'
                     password={true}
                     onChangeText={text => this.setState({password:text})}
@@ -44,39 +48,59 @@ export default class Home extends Component {
                 />
                 <Button
                     title="Register"
-                    style={styles.Button}
+                    style={styles.button}
                     onPress={this.onPressRegister.bind(this)}
                 />
                 <Button
                     title="Login"
-                    style={styles.Button}
+                    style={styles.button}
                     onPress={this.onPressLogin.bind(this)}
                 />
-            </View>
+            </KeyboardAvoidingView>
+            
         );
     }
 }
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        alignContent:'center'
+    main: {
+      flex: 1,
+      padding: 30,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      backgroundColor: 'black'
     },
-    input:{
-        color: 'black',
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
+    title: {
+        color:'white',
+      marginBottom: 20,
+      fontSize: 25,
+      textAlign: 'center'
+    },
+    itemInput: {
+      height: 50,
+      padding: 4,
+      marginRight: 5,
+      fontSize: 23,
+      borderWidth: 1,
+      borderColor: 'white',
+      borderRadius: 8,
+      color: 'white'
+    },
+    buttonText: {
+      fontSize: 18,
+      color: 'black',
+      alignSelf: 'center'
     },
     button: {
-        height: 45,
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderColor: 'white',
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-        marginTop: 10,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
-      }
-})
+      color:'white',
+      height: 45,
+      flexDirection: 'row',
+      backgroundColor: 'white',
+      borderColor: 'white',
+      borderWidth: 1,
+      borderRadius: 8,
+      marginBottom: 10,
+      marginTop: 10,
+      alignSelf: 'stretch',
+      justifyContent: 'center'
+    }
+  });

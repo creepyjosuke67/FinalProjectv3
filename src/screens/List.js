@@ -20,11 +20,20 @@ export default class lfmAlbums extends Component {
         };
     }
 
-    masterSearch(item) {
-        var searchTerm = ({discogSearch:item});
-        this.setState({discogSearch:this.state.discogSearch.replace(" ","%20")});
-        this.props.navigation.navigate('FinalScreen',{
-          newSearch: this.state.discogSearch
+    masterSearch(title , artist) {
+        var searchtitle = title 
+        searchtitle = searchtitle.replace(' ', '%20');
+        searchtitle = searchtitle.replace('\'','%27');
+        searchtitle = searchtitle.replace('.','%2e');
+        searchtitle = searchtitle.replace('-','%2d');
+        var searchartist = artist;
+        searchartist = searchartist.replace(' ', '%20');
+        searchartist = searchartist.replace('\'','%27');
+        searchartist = searchartist.replace('.','%2e');
+        searchartist = searchartist.replace('-','%2d');
+        this.props.navigation.navigate('Releases',{
+          newSearch: searchtitle,
+          newArtist: searchartist
         });
     }
 
@@ -34,23 +43,24 @@ export default class lfmAlbums extends Component {
         var username = '';
         let userRef = db.ref('users/'+ userID).child('lfmUser');
         userRef.on('value',(snap) =>{
-          console.log(snap.val());
           username=snap.val();
           
         });
-
-        fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+username+'&api_key='+this.state.lfm_key+'&format=json',{
+        setTimeout(() =>
+          {fetch('http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user='+username+'&api_key='+this.state.lfm_key+'&format=json',{
             method:'GET',
           
-        })
-        .then((response) => response.json())
-        .then((json) => {
+          })
+          .then((response) => response.json())
+          .then((json) => {
             this.setState({ data: json.topalbums.album });
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
+          })
+          .catch((error) => console.error(error))
+          .finally(() => {
             this.setState({ isLoading: false });
-        });
+          })}
+          , 200
+        );
     }
     
     render() {
@@ -73,8 +83,8 @@ export default class lfmAlbums extends Component {
 
                         <Image source={{uri:item.image[2]['#text']}} style ={{height:300, width:300}}/>
 
-                        <Button title="find on discogs" 
-                            onPress={() => this.masterSearch(item.name)}
+                        <Button title="Find Releases on Discogs" 
+                            onPress={() => this.masterSearch(item.name, item.artist.name)}
                         />
                         
                   </View>

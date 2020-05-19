@@ -18,7 +18,7 @@ export default class AddItem extends Component {
         const fname = this.state.fname;
         const lname = this.state.lname;
         const lfmUser = this.state.lfmUser;
-        
+
         db.ref('users/' + firebase.auth().currentUser.uid).set({
             email,
             fname,
@@ -28,7 +28,7 @@ export default class AddItem extends Component {
             console.log('data', data)
         })
         //exporting email address to list so it can be searched in the database
-        .then(() => {this.props.navigation.navigate("List",{email:this.email})})
+        .then(() => {this.props.navigation.navigate("TopAlbums",{email:this.email})})
         .catch((error =>{
             console.log('error', error)
         }));
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       padding: 30,
       flexDirection: 'column',
       justifyContent: 'center',
-      backgroundColor: '#6565fc'
+      backgroundColor: 'black'
     },
     title: {
       marginBottom: 20,
@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       fontSize: 18,
-      color: '#111',
+      color: 'black',
       alignSelf: 'center'
     },
     button: {
+      color:'white',
       height: 45,
       flexDirection: 'row',
       backgroundColor: 'white',

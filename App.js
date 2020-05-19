@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Home from './src/screens/Login';
-import NewUser from './src/screens/NewUser';
-import List from './src/screens/List';
-import FinalScreen from './src/screens/FinalScreen';
+import Login from './src/screens/Login';
+import Registration from './src/screens/NewUser';
+import TopAlbums from './src/screens/List';
+import Releases from './src/screens/FinalScreen';
 
 const AppNavigator = createStackNavigator(
 {
-  Home,
-  NewUser,
-  List, 
-  FinalScreen,
+  Login,
+  Registration,
+  TopAlbums, 
+  Releases,
 },
 {
-  initialRouteName:'Home'
+  initialRouteName:'Login'
 }
 );
 

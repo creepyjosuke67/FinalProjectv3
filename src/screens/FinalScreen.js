@@ -19,18 +19,20 @@ export default class lfmAlbums extends Component {
     }
     componentDidMount() {
         const newSearch = this.props.navigation.getParam('newSearch','NO-ID');
-        //fetch('https://api.discogs.com/database')
-        fetch('https://api.discogs.com/masters/'+this.state.discogMaster+'/versions',{
+        const newArtist = this.props.navigation.getParam('newArtist','NO-ID');
+        console.log(newArtist);
+        fetch('https://api.discogs.com/database/search?q='+newSearch+'%20'+newArtist+'&type=release'+'&key='+this.state.discogKey+'&secret='+this.state.discogSecret,{
+        
             method:'GET',
           
         })
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json.versions })
+            this.setState({ data: json.results });
         })
         .catch((error) => console.error(error))
         .finally(() => {
-            this.setState({ isLoading: false })
+            this.setState({ isLoading: false });
         });
     }
     
@@ -48,11 +50,13 @@ export default class lfmAlbums extends Component {
                 renderItem={({ item }) => (
                   <View style={{flex:1,justifyContent:'center',backgroundColor:'black', borderColor:'gray', borderWidth:1, paddingBottom:10, textAlign:'center', margin:10}}>
                         
-                        <Text style={{color:'white', paddingBottom:5}}>{item.stats.label}</Text>
+                        <Text style={{color:'white', paddingBottom:5}}>{item.title}</Text>
                     
-                        <Text style={{color:'white'}}>{item.stats.format}</Text>
+                        <Text style={{color:'white', paddingBottom:5}}>{item.format[0]} {item.format[1]} {item.format[2]} {item.format[3]}</Text>
 
-                        <Text style={{color:'white'}}>{item.stats.released}</Text>
+                <Text style={{color:'white',paddingBottom:5}}>{item.country} {item.year}</Text>
+
+                        <Image source={{uri:item.cover_image}} style ={{height:300, width:300}}/>
       
                   </View>
                   
